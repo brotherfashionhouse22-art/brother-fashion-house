@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brother Fashion House</title>
+
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff}
+.container{max-width:420px;margin:auto;padding:20px}
+.header{text-align:center;font-size:26px;font-weight:bold;margin-bottom:10px}
+.price{text-align:center;font-size:34px;color:#00ff99;margin:10px 0}
+.subtitle{text-align:center;color:#aaa;margin-bottom:20px}
+img{width:100%;border-radius:12px;margin-bottom:20px}
+h2{margin:15px 0}
+input,textarea,select,button{
+  width:100%;padding:14px;margin-bottom:14px;border:none;border-radius:10px;font-size:16px
+}
+button{background:#00ff99;color:#000;font-weight:bold;font-size:18px}
+.note{font-size:14px;color:#bbb;margin-top:15px;line-height:1.6}
+.footer{text-align:center;font-size:14px;color:#777;margin-top:25px}
+.small{font-size:12px;color:#888}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Shop Name -->
+  <div class="header">Brother Fashion House</div>
+
+  <!-- Product Image -->
+  <!-- এখানে আপনার নিজের ইমেজ লিংক বসান -->
+  <img src="https://via.placeholder.com/400x400.png?text=Product+Image">
+
+  <!-- Price & Short Description -->
+  <div class="price">৳ 1,250</div>
+  <div class="subtitle">High quality fabric, limited stock</div>
+
+  <!-- Order Form -->
+  <h2>Order Form</h2>
+
+  <input type="text" id="name" placeholder="আপনার নাম" required>
+  <input type="tel" id="phone" placeholder="মোবাইল নাম্বার" required>
+  <textarea id="address" placeholder="পূর্ণ ঠিকানা" required></textarea>
+
+  <!-- Payment -->
+  <select id="payment">
+    <option value="">Payment Method</option>
+    <option>Full Payment (bKash)</option>
+    <option>30% Advance (bKash)</option>
+  </select>
+
+  <!-- Admin basic password (simple) -->
+  <input type="password" id="admin" placeholder="Admin password">
+
+  <button onclick="placeOrder()">Place Order</button>
+
+  <!-- Notes -->
+  <div class="note">
+    • Cash on Delivery নেই<br>
+    • bKash নাম্বার: <b>01304388032</b><br>
+    • Payment করার পর Screenshot WhatsApp-এ পাঠাতে হবে<br>
+    • Delivery charge লোকেশন অনুযায়ী
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    WhatsApp: 01304388032<br>
+    © Brother Fashion House
+  </div>
+
+</div>
+
+<script>
+function placeOrder(){
+  var name = document.getElementById("name").value;
+  var phone = document.getElementById("phone").value;
+  var address = document.getElementById("address").value;
+  var payment = document.getElementById("payment").value;
+  var admin = document.getElementById("admin").value;
+
+  if(!name || !phone || !address || !payment){
+    alert("সব ঘর পূরণ করুন");
+    return;
+  }
+
+  // WhatsApp auto message
+  var waText =
+    "Order Details%0A" +
+    "Name: " + name + "%0A" +
+    "Mobile: " + phone + "%0A" +
+    "Address: " + address + "%0A" +
+    "Payment: " + payment;
+
+  // Google Sheets (Apps Script) — এখানে আপনার আসল URL বসান
+  var sheetURL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+  if(sheetURL !== "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"){
+    fetch(sheetURL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        name:name,
+        phone:phone,
+        address:address,
+        payment:payment,
+        admin:admin
+      })
+    });
+  }
+
+  // Redirect to WhatsApp
+  window.location.href = "https://wa.me/8801304388032?text=" + waText;
+}
+</script>
+
+</body>
+</html>
