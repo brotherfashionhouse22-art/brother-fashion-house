@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brother Fashion House</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+    }
+    .container {
+      max-width: 480px;
+      margin: auto;
+      padding: 15px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .price {
+      font-size: 22px;
+      text-align: center;
+      color: #00ff99;
+      margin-bottom: 10px;
+    }
+    .box {
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      background: #00ff99;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    ul {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>Brother Fashion House</h1>
+
+  <img src="https://via.placeholder.com/500x500.png?text=Product+Image" alt="Product">
+
+  <div class="price">৳ 1,200</div>
+
+  <div class="box">
+    High quality fabric, limited stock
+  </div>
+
+  <div class="box">
+    <h2>Order Form</h2>
+
+    <input type="text" id="name" placeholder="আপনার নাম">
+    <input type="tel" id="mobile" placeholder="মোবাইল নাম্বার">
+    <textarea id="address" placeholder="পূর্ণ ঠিকানা"></textarea>
+
+    <select id="payment">
+      <option value="">Payment Method নির্বাচন করুন</option>
+      <option value="Full Payment">Full Payment</option>
+      <option value="30% Advance">30% Advance</option>
+    </select>
+
+    <button onclick="sendWhatsApp()">Place Order</button>
+  </div>
+
+  <ul>
+    <li>Cash on Delivery নেই</li>
+    <li>bKash নাম্বার: 01304388032</li>
+    <li>Payment করার পর Screenshot WhatsApp-এ পাঠাতে হবে</li>
+    <li>Delivery charge লোকেশন অনুযায়ী</li>
+  </ul>
+
+  <footer>
+    WhatsApp: 01304388032 <br>
+    © Brother Fashion House
+  </footer>
+
+</div>
+
+<script>
+function sendWhatsApp() {
+  var name = document.getElementById("name").value;
+  var mobile = document.getElementById("mobile").value;
+  var address = document.getElementById("address").value;
+  var payment = document.getElementById("payment").value;
+
+  if (!name || !mobile || !address || !payment) {
+    alert("সব তথ্য পূরণ করুন");
+    return;
+  }
+
+  var text =
+    "New Order%0A" +
+    "Name: " + name + "%0A" +
+    "Mobile: " + mobile + "%0A" +
+    "Address: " + address + "%0A" +
+    "Payment: " + payment;
+
+  window.open("https://wa.me/8801304388032?text=" + text, "_blank");
+}
+</script>
+
+</body>
+</html>
