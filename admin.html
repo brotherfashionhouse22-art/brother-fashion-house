@@ -1,67 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
+<title>Admin Panel - Brother Fashion House</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="firebase.js"></script>
+
 <style>
-body{font-family:Arial;background:#f5f5f5;padding:20px}
-input,button{padding:10px;margin:5px;width:100%}
-.card{background:#fff;padding:15px;margin:10px 0;border-radius:8px}
+body{font-family:Arial;background:#f4f4f4;margin:0}
+.login,.panel{max-width:400px;margin:40px auto;background:#fff;padding:20px;border-radius:8px}
+input,button{width:100%;padding:10px;margin:6px 0}
+button{background:#111;color:#fff;border:none}
+.product{border-bottom:1px solid #ddd;padding:8px}
+small{color:green}
 </style>
 </head>
+
 <body>
 
-<h2>Admin Login</h2>
+<div class="login" id="loginBox">
+<h3>Admin Login</h3>
 <input type="password" id="pass" placeholder="Password">
 <button onclick="login()">Login</button>
-
-<div id="panel" style="display:none">
-
-<h3>Add Product</h3>
-<input id="name" placeholder="Product Name">
-<input id="price" placeholder="Price">
-<input id="size" placeholder="Size (S/M/L/XL)">
-<input type="file" id="img">
-<button onclick="addProduct()">Upload</button>
-
-<h3>Products</h3>
-<div id="list"></div>
-
 </div>
 
-<script src="firebase.js"></script>
+<div class="panel" id="panelBox" style="display:none">
+<h3>Admin Panel</h3>
+
+<input id="name" placeholder="Product Name">
+<input id="price" placeholder="Price">
+<input id="size" placeholder="Size">
+<input id="image" placeholder="Image URL">
+<button onclick="addProduct()">Add Product</button>
+
+<h4>Products</h4>
+<div id="products"></div>
+
+<p><b>Total Sale:</b> ৳<span id="totalSale">0</span></p>
+</div>
+
 <script>
+const PASSWORD = "Brother@2026";
+
 function login(){
- if(document.getElementById("pass").value==="Brother@2026"){
-  document.getElementById("panel").style.display="block";
- }
+  if(document.getElementById("pass").value === PASSWORD){
+    loginBox.style.display="none";
+    panelBox.style.display="block";
+    loadProducts();
+  } else {
+    alert("Wrong Password");
+  }
 }
 
 function addProduct(){
- let f=document.getElementById("img").files[0];
- let ref=storage.ref("products/"+Date.now()+f.name);
- ref.put(f).then(()=>{
-  ref.getDownloadURL().then(url=>{
-   db.collection("products").add({
-    name:name.value,price:price.value,size:size.value,
-    img:url,sold:false
-   });
+  db.collection("products").add({
+    name:name.value,
+    price:price.value,
+    size:size.value,
+    image:image.value,
+    sold:false
   });
- });
 }
 
-db.collection("products").onSnapshot(snap=>{
- list.innerHTML="";
- snap.forEach(d=>{
-  let p=d.data();
-  list.innerHTML+=`
-  <div class="card">
-   ${p.name} - ৳${p.price} (${p.size})
-   <button onclick="db.collection('products').doc('${d.id}').delete()">Delete</button>
-   <button onclick="db.collection('products').doc('${d.id}').update({sold:true})">SOLD</button>
-  </div>`;
- });
-});
+function loadProducts(){
+  db.collection("products").onSnapshot(snap=>{
+    products.innerHTML="";
+    let total=0;
+    snap.forEach(doc=>{
+      let p=doc.data();
+      if(p.sold) total+=Number(p.price);
+      products.innerHTML+=`
+      <div class="product">
+        ${p.name} - ৳${p.price}
+        ${p.sold?'<small> SOLD</small>':''}<br>
+        <button onclick="markSold('${doc.id}',${p.price})">Sold</button>
+        <button onclick="del('${doc.id}')">Delete</button>
+      </div>`;
+    });
+    totalSale.innerText=total;
+  });
+}
+
+function del(id){
+  db.collection("products").doc(id).delete();
+}
+function markSold(id){
+  db.collection("products").doc(id).update({sold:true});
+}
 </script>
+
 </body>
 </html>
