@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:20px}
+input,button{padding:10px;margin:5px;width:100%}
+.card{background:#fff;padding:15px;margin:10px 0;border-radius:8px}
+</style>
+</head>
+<body>
+
+<h2>Admin Login</h2>
+<input type="password" id="pass" placeholder="Password">
+<button onclick="login()">Login</button>
+
+<div id="panel" style="display:none">
+
+<h3>Add Product</h3>
+<input id="name" placeholder="Product Name">
+<input id="price" placeholder="Price">
+<input id="size" placeholder="Size (S/M/L/XL)">
+<input type="file" id="img">
+<button onclick="addProduct()">Upload</button>
+
+<h3>Products</h3>
+<div id="list"></div>
+
+</div>
+
+<script src="firebase.js"></script>
+<script>
+function login(){
+ if(document.getElementById("pass").value==="Brother@2026"){
+  document.getElementById("panel").style.display="block";
+ }
+}
+
+function addProduct(){
+ let f=document.getElementById("img").files[0];
+ let ref=storage.ref("products/"+Date.now()+f.name);
+ ref.put(f).then(()=>{
+  ref.getDownloadURL().then(url=>{
+   db.collection("products").add({
+    name:name.value,price:price.value,size:size.value,
+    img:url,sold:false
+   });
+  });
+ });
+}
+
+db.collection("products").onSnapshot(snap=>{
+ list.innerHTML="";
+ snap.forEach(d=>{
+  let p=d.data();
+  list.innerHTML+=`
+  <div class="card">
+   ${p.name} - ৳${p.price} (${p.size})
+   <button onclick="db.collection('products').doc('${d.id}').delete()">Delete</button>
+   <button onclick="db.collection('products').doc('${d.id}').update({sold:true})">SOLD</button>
+  </div>`;
+ });
+});
+</script>
+</body>
+</html>
