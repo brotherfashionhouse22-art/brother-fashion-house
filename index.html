@@ -14,26 +14,16 @@ body{
 
 /* Header */
 .header{
-  background:#ff2e00;
+  background:#ff0000;
   color:#fff;
   padding:15px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
 }
 .header h2{margin:0;font-size:18px}
-.admin-btn{
-  background:#fff;
-  color:#ff2e00;
-  padding:6px 12px;
-  border-radius:6px;
-  font-weight:bold;
-}
 
 /* Search */
 .search{
   padding:10px;
-  background:#ff2e00;
+  background:#ff0000;
 }
 .search input{
   width:100%;
@@ -65,20 +55,40 @@ body{
   padding:10px;
 }
 .price{
-  color:#ff2e00;
+  color:#ff0000;
   font-weight:bold;
   font-size:18px;
 }
 .order-btn{
   display:block;
   margin-top:8px;
-  background:#ff2e00;
+  background:#ff0000;
   color:#fff;
   text-align:center;
   padding:10px;
   border-radius:8px;
   text-decoration:none;
   font-weight:bold;
+}
+
+/* Profile Page */
+.profile{
+  display:none;
+  padding:15px;
+}
+.profile-box{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.profile-box h3{
+  margin-top:0;
+}
+.profile-box a{
+  color:#ff0000;
+  font-weight:bold;
+  text-decoration:none;
 }
 
 /* Bottom Nav */
@@ -102,6 +112,17 @@ body{
   display:block;
 }
 </style>
+
+<script>
+function showHome(){
+  document.getElementById("home").style.display="block";
+  document.getElementById("profile").style.display="none";
+}
+function showProfile(){
+  document.getElementById("home").style.display="none";
+  document.getElementById("profile").style.display="block";
+}
+</script>
 </head>
 
 <body>
@@ -109,47 +130,69 @@ body{
 <!-- Header -->
 <div class="header">
   <h2>Brother Fashion</h2>
-  <div class="admin-btn">অ্যাডমিন</div>
 </div>
 
-<!-- Search -->
-<div class="search">
-  <input type="text" placeholder="পণ্য খুঁজুন...">
-</div>
+<!-- HOME -->
+<div id="home">
 
-<!-- Products -->
-<div class="products">
-
-  <div class="card">
-    <img src="https://i.imgur.com/8ZQZQZQ.jpg">
-    <div class="info">
-      <div>স্পেশাল হারবাল ঔষধ</div>
-      <div class="price">৳ 500</div>
-      <a class="order-btn"
-         href="https://wa.me/8801304388032?text=আমি স্পেশাল হারবাল ঔষধ অর্ডার করতে চাই">
-         অর্ডার করুন
-      </a>
-    </div>
+  <div class="search">
+    <input type="text" placeholder="পণ্য খুঁজুন...">
   </div>
 
-  <div class="card">
-    <img src="https://i.imgur.com/VQFZKZy.jpg">
-    <div class="info">
-      <div>এক্সক্লুসিভ ব্ল্যাক শার্ট</div>
-      <div class="price">৳ 1200</div>
-      <a class="order-btn"
-         href="https://wa.me/8801304388032?text=আমি ব্ল্যাক শার্ট অর্ডার করতে চাই">
-         অর্ডার করুন
-      </a>
-    </div>
-  </div>
+  <div class="products">
 
+    <div class="card">
+      <img src="https://i.imgur.com/8ZQZQZQ.jpg">
+      <div class="info">
+        <div>স্পেশাল হারবাল ঔষধ</div>
+        <div class="price">৳ 500</div>
+        <a class="order-btn"
+        href="https://wa.me/8801304388032?text=আমি স্পেশাল হারবাল ঔষধ অর্ডার করতে চাই">
+        অর্ডার করুন</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/VQFZKZy.jpg">
+      <div class="info">
+        <div>এক্সক্লুসিভ ব্ল্যাক শার্ট</div>
+        <div class="price">৳ 1200</div>
+        <a class="order-btn"
+        href="https://wa.me/8801304388032?text=আমি ব্ল্যাক শার্ট অর্ডার করতে চাই">
+        অর্ডার করুন</a>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<!-- Bottom Navigation -->
+<!-- PROFILE -->
+<div id="profile" class="profile">
+  <div class="profile-box">
+    <h3>🏪 দোকানের তথ্য</h3>
+    <p><b>Shop Name:</b> Brother Fashion House</p>
+    <p><b>Owner:</b> মোঃ জসিম উদ্দিন মৃধা</p>
+    <p><b>Mobile:</b> +8801304388032</p>
+    <p><b>Address:</b><br>
+      মামুন সুপার মার্কেট,<br>
+      রায়েন্দা বাজার, শরণখোলা,<br>
+      বাগেরহাট
+    </p>
+    <p>
+      📍 <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank">
+      Live Google Map Location</a>
+    </p>
+    <hr>
+    <p><b>Web Planning & Director:</b><br>
+       MRIDHA MD MERAJ
+    </p>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
 <div class="nav">
-  <div><span>🏠</span>হোম</div>
-  <div><span>👤</span>প্রোফাইল</div>
+  <div onclick="showHome()"><span>🏠</span>হোম</div>
+  <div onclick="showProfile()"><span>👤</span>প্রোফাইল</div>
 </div>
 
 </body>
