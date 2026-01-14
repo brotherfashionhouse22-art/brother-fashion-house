@@ -10,23 +10,28 @@ body{margin:0;font-family:sans-serif;background:#f4f4f4}
 header{background:#f44336;color:#fff;padding:15px;font-size:20px;font-weight:bold}
 .search{padding:10px}
 .search input{width:100%;padding:12px;border-radius:25px;border:none}
+
 .products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
 .card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .card img{width:100%;height:180px;object-fit:cover}
 .card h3{margin:8px;font-size:15px}
 .price{color:#f44336;font-weight:bold;margin:0 8px}
 .size{margin:0 8px;font-size:13px}
-.btn{display:block;margin:10px;background:#f44336;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none}
-.sold{position:absolute;background:black;color:#fff;padding:5px 10px;top:10px;left:10px;border-radius:5px}
+
+.btn{display:block;margin:10px;background:#f44336;color:#fff;
+text-align:center;padding:10px;border-radius:10px;text-decoration:none}
+
 .hide{display:none}
 
-footer{position:fixed;bottom:0;width:100%;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ccc}
+footer{position:fixed;bottom:0;width:100%;background:#fff;
+display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ccc}
 footer div{text-align:center;font-size:14px;cursor:pointer}
 
 .section{padding-bottom:70px}
 .profile{padding:15px}
-.profile h3{margin-top:0}
-.counter{font-size:13px;color:#555;margin:5px}
+.admin{padding:15px}
+input,select,textarea{width:100%;padding:10px;margin:6px 0}
+
 </style>
 </head>
 
@@ -34,21 +39,19 @@ footer div{text-align:center;font-size:14px;cursor:pointer}
 
 <header>Brother Fashion House</header>
 
+<!-- HOME -->
 <div class="section" id="home">
   <div class="search">
-    <input type="text" id="search" placeholder="পণ্য খুঁজুন..." onkeyup="searchProduct()">
+    <input type="text" placeholder="পণ্য খুঁজুন..." onkeyup="searchProduct(this.value)">
   </div>
-
-  <div class="counter">👁 Visitor: <span id="visitor"></span></div>
-  <div class="counter">💰 Total Sales: ৳ <span id="sales"></span></div>
-
   <div class="products" id="list"></div>
 </div>
 
+<!-- PROFILE -->
 <div class="section hide" id="profile">
   <div class="profile">
     <h3>🏪 দোকানের তথ্য</h3>
-    <p><b>Shop Name:</b> Brothers Fashion House</p>
+    <p><b>Shop:</b> Brothers Fashion House</p>
     <p><b>Owner:</b> মোঃ জসিম উদ্দিন মৃধা</p>
     <p><b>Mobile:</b> 01304388032</p>
     <p><b>Address:</b><br>
@@ -59,7 +62,16 @@ footer div{text-align:center;font-size:14px;cursor:pointer}
     <p>📍 <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank">
     Live Google Map Location</a></p>
 
-    <p><b>Web Planner:</b> MRIDHA MD MERAJ</p>
+    <hr>
+    <button class="btn" onclick="adminLogin()">🔒 Admin Panel</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="section hide" id="admin">
+  <div class="admin">
+    <h3>🔐 Admin Panel</h3>
+    <div id="adminList"></div>
   </div>
 </div>
 
@@ -69,65 +81,66 @@ footer div{text-align:center;font-size:14px;cursor:pointer}
 </footer>
 
 <script>
+const ADMIN_PASS="1234"; // চাইলে বদলাবেন
+
 let products=[
- {name:"স্পেশাল হারবাল ঔষধ",price:500,size:"Free",img:"https://i.imgur.com/8zQZQZC.jpg",sold:false},
- {name:"এক্সক্লুসিভ ব্ল্যাক শার্ট",price:1200,size:"M,L,XL",img:"https://i.imgur.com/2nCt3Sbl.jpg",sold:false}
+ {name:"এক্সক্লুসিভ ব্ল্যাক শার্ট",price:1200,size:"M,L,XL",
+ img:"https://i.imgur.com/2nCt3Sbl.jpg",sold:false}
 ];
 
-let sales=localStorage.getItem("sales")||0;
-document.getElementById("sales").innerText=sales;
-
-let visitor=localStorage.getItem("visitor")||0;
-visitor++;
-localStorage.setItem("visitor",visitor);
-document.getElementById("visitor").innerText=visitor;
-
 function render(){
- let html="";
+ let h="",a="";
  products.forEach((p,i)=>{
- html+=`
+ h+=`
  <div class="card">
-   ${p.sold?'<div class="sold">SOLD</div>':''}
-   <img src="${p.img}">
-   <h3>${p.name}</h3>
-   <p class="price">৳ ${p.price}</p>
-   <p class="size">Size: ${p.size}</p>
-   <a class="btn ${p.sold?'hide':''}"
-   href="https://wa.me/8801304388032?text=${encodeURIComponent(p.name)}">
-   অর্ডার করুন</a>
+  <img src="${p.img}">
+  <h3>${p.name}</h3>
+  <p class="price">৳ ${p.price}</p>
+  <p class="size">Size: ${p.size}</p>
+  <a class="btn"
+  href="https://wa.me/8801304388032?text=
+  ${encodeURIComponent(
+  'পণ্য: '+p.name+
+  '\nদাম: '+p.price+
+  '\nসাইজ: '+p.size+
+  '\nনাম:\nমোবাইল:\nঠিকানা:\nপেমেন্ট: Cash/Bkash'
+  )}">
+  অর্ডার করুন</a>
+ </div>`;
 
-   <a class="btn" onclick="sell(${i})">Sold</a>
-   <a class="btn" onclick="del(${i})">Delete</a>
+ a+=`
+ <div class="card">
+  <h3>${p.name}</h3>
+  <button class="btn" onclick="sold(${i})">Sold</button>
+  <button class="btn" onclick="del(${i})">Delete</button>
  </div>`;
  });
- document.getElementById("list").innerHTML=html;
+ document.getElementById("list").innerHTML=h;
+ document.getElementById("adminList").innerHTML=a;
 }
 render();
 
-function sell(i){
- products[i].sold=true;
- sales=parseInt(sales)+products[i].price;
- localStorage.setItem("sales",sales);
- document.getElementById("sales").innerText=sales;
- render();
-}
+function sold(i){products[i].sold=true;alert("Marked Sold")}
+function del(i){products.splice(i,1);render()}
 
-function del(i){
- products.splice(i,1);
- render();
-}
-
-function searchProduct(){
- let q=document.getElementById("search").value.toLowerCase();
+function searchProduct(q){
+ q=q.toLowerCase();
  document.querySelectorAll(".card").forEach(c=>{
  c.style.display=c.innerText.toLowerCase().includes(q)?"block":"none";
  });
 }
 
 function show(id){
- document.getElementById("home").classList.add("hide");
- document.getElementById("profile").classList.add("hide");
+ ["home","profile","admin"].forEach(x=>{
+ document.getElementById(x).classList.add("hide");
+ });
  document.getElementById(id).classList.remove("hide");
+}
+
+function adminLogin(){
+ let p=prompt("Admin Password");
+ if(p===ADMIN_PASS){show("admin")}
+ else alert("Wrong Password");
 }
 </script>
 
