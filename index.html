@@ -1,186 +1,156 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <title>Brother Fashion House</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brother Fashion House</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f4;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f2f2f2;
+}
 
-    header {
-      background: #000;
-      color: #fff;
-      padding: 15px;
-      text-align: center;
-    }
+/* Header */
+.header{
+  background:#ff2e00;
+  color:#fff;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h2{margin:0;font-size:18px}
+.admin-btn{
+  background:#fff;
+  color:#ff2e00;
+  padding:6px 12px;
+  border-radius:6px;
+  font-weight:bold;
+}
 
-    .container {
-      padding: 15px;
-      max-width: 1000px;
-      margin: auto;
-    }
+/* Search */
+.search{
+  padding:10px;
+  background:#ff2e00;
+}
+.search input{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  outline:none;
+}
 
-    .info, .products {
-      background: #fff;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+/* Products */
+.products{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px;
+}
+.card{
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+.card .info{
+  padding:10px;
+}
+.price{
+  color:#ff2e00;
+  font-weight:bold;
+  font-size:18px;
+}
+.order-btn{
+  display:block;
+  margin-top:8px;
+  background:#ff2e00;
+  color:#fff;
+  text-align:center;
+  padding:10px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+}
 
-    h2, h3 {
-      margin-top: 0;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    .card {
-      border: 1px solid #ddd;
-      padding: 12px;
-      border-radius: 10px;
-      position: relative;
-    }
-
-    .sold {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: red;
-      color: #fff;
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 5px;
-    }
-
-    .price {
-      font-weight: bold;
-      margin: 5px 0;
-    }
-
-    .size {
-      font-size: 14px;
-      color: #555;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #25D366;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .btn.disabled {
-      background: gray;
-      pointer-events: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 13px;
-      color: #666;
-    }
-  </style>
+/* Bottom Nav */
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#fff;
+  border-top:1px solid #ddd;
+  display:flex;
+  justify-content:space-around;
+  padding:8px 0;
+}
+.nav div{
+  text-align:center;
+  font-size:12px;
+}
+.nav span{
+  font-size:22px;
+  display:block;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>👕 Brother Fashion House</h1>
-</header>
+<!-- Header -->
+<div class="header">
+  <h2>Brother Fashion</h2>
+  <div class="admin-btn">অ্যাডমিন</div>
+</div>
 
-<div class="container">
+<!-- Search -->
+<div class="search">
+  <input type="text" placeholder="পণ্য খুঁজুন...">
+</div>
 
-  <!-- দোকানের তথ্য -->
-  <div class="info">
-    <h3>🏪 দোকানের তথ্য</h3>
+<!-- Products -->
+<div class="products">
 
-    <p><strong>Shop Name:</strong> Brother Fashion House</p>
-    <p><strong>Owner:</strong> মোঃ জসিম</p>
-
-    <p>
-      <strong>Address:</strong><br>
-      মামুন সুপার মার্কেট,<br>
-      রায়েন্দা বাজার, শরণখোলা,<br>
-      বাগেরহাট
-    </p>
-
-    <p>
-      📍
-      <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank">
-        Live Google Map Location
+  <div class="card">
+    <img src="https://i.imgur.com/8ZQZQZQ.jpg">
+    <div class="info">
+      <div>স্পেশাল হারবাল ঔষধ</div>
+      <div class="price">৳ 500</div>
+      <a class="order-btn"
+         href="https://wa.me/8801304388032?text=আমি স্পেশাল হারবাল ঔষধ অর্ডার করতে চাই">
+         অর্ডার করুন
       </a>
-    </p>
-
-    <p>
-      <strong>WhatsApp:</strong>
-      <a href="https://wa.me/8801304388032" target="_blank">
-        +8801304388032
-      </a>
-    </p>
+    </div>
   </div>
 
-  <!-- প্রোডাক্ট -->
-  <div class="products" id="productList">
-    <!-- Products will load here -->
+  <div class="card">
+    <img src="https://i.imgur.com/VQFZKZy.jpg">
+    <div class="info">
+      <div>এক্সক্লুসিভ ব্ল্যাক শার্ট</div>
+      <div class="price">৳ 1200</div>
+      <a class="order-btn"
+         href="https://wa.me/8801304388032?text=আমি ব্ল্যাক শার্ট অর্ডার করতে চাই">
+         অর্ডার করুন
+      </a>
+    </div>
   </div>
 
 </div>
 
-<footer>
-  © 2026 Brother Fashion House
-</footer>
-
-<script>
-  const whatsapp = "8801304388032";
-
-  const products = [
-    {
-      name: "T-Shirt Premium",
-      price: 650,
-      size: "M, L, XL",
-      sold: false
-    },
-    {
-      name: "Polo Shirt",
-      price: 850,
-      size: "L, XL",
-      sold: true
-    }
-  ];
-
-  const list = document.getElementById("productList");
-
-  products.forEach(p => {
-    list.innerHTML += `
-      <div class="card">
-        ${p.sold ? '<div class="sold">SOLD</div>' : ''}
-        <h3>${p.name}</h3>
-        <div class="price">৳ ${p.price}</div>
-        <div class="size">Size: ${p.size}</div>
-
-        <a class="btn ${p.sold ? 'disabled' : ''}"
-           href="https://wa.me/${whatsapp}"
-           target="_blank">
-           WhatsApp Order
-        </a>
-      </div>
-    `;
-  });
-</script>
+<!-- Bottom Navigation -->
+<div class="nav">
+  <div><span>🏠</span>হোম</div>
+  <div><span>👤</span>প্রোফাইল</div>
+</div>
 
 </body>
 </html>
