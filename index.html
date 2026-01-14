@@ -6,194 +6,130 @@
 <title>Brother Fashion House</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#f2f2f2;
-}
+body{margin:0;font-family:sans-serif;background:#f4f4f4}
+header{background:#f44336;color:#fff;padding:15px;font-size:20px;font-weight:bold}
+.search{padding:10px}
+.search input{width:100%;padding:12px;border-radius:25px;border:none}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
+.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.card img{width:100%;height:180px;object-fit:cover}
+.card h3{margin:8px;font-size:15px}
+.price{color:#f44336;font-weight:bold;margin:0 8px}
+.size{margin:0 8px;font-size:13px}
+.btn{display:block;margin:10px;background:#f44336;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none}
+.sold{position:absolute;background:black;color:#fff;padding:5px 10px;top:10px;left:10px;border-radius:5px}
+.hide{display:none}
 
-/* Header */
-.header{
-  background:#ff0000;
-  color:#fff;
-  padding:15px;
-}
-.header h2{margin:0;font-size:18px}
+footer{position:fixed;bottom:0;width:100%;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ccc}
+footer div{text-align:center;font-size:14px;cursor:pointer}
 
-/* Search */
-.search{
-  padding:10px;
-  background:#ff0000;
-}
-.search input{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:25px;
-  outline:none;
-}
-
-/* Products */
-.products{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:10px;
-}
-.card{
-  background:#fff;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
-}
-.card img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-.card .info{
-  padding:10px;
-}
-.price{
-  color:#ff0000;
-  font-weight:bold;
-  font-size:18px;
-}
-.order-btn{
-  display:block;
-  margin-top:8px;
-  background:#ff0000;
-  color:#fff;
-  text-align:center;
-  padding:10px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-/* Profile Page */
-.profile{
-  display:none;
-  padding:15px;
-}
-.profile-box{
-  background:#fff;
-  padding:15px;
-  border-radius:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
-}
-.profile-box h3{
-  margin-top:0;
-}
-.profile-box a{
-  color:#ff0000;
-  font-weight:bold;
-  text-decoration:none;
-}
-
-/* Bottom Nav */
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:#fff;
-  border-top:1px solid #ddd;
-  display:flex;
-  justify-content:space-around;
-  padding:8px 0;
-}
-.nav div{
-  text-align:center;
-  font-size:12px;
-}
-.nav span{
-  font-size:22px;
-  display:block;
-}
+.section{padding-bottom:70px}
+.profile{padding:15px}
+.profile h3{margin-top:0}
+.counter{font-size:13px;color:#555;margin:5px}
 </style>
-
-<script>
-function showHome(){
-  document.getElementById("home").style.display="block";
-  document.getElementById("profile").style.display="none";
-}
-function showProfile(){
-  document.getElementById("home").style.display="none";
-  document.getElementById("profile").style.display="block";
-}
-</script>
 </head>
 
 <body>
 
-<!-- Header -->
-<div class="header">
-  <h2>Brother Fashion</h2>
-</div>
+<header>Brother Fashion House</header>
 
-<!-- HOME -->
-<div id="home">
-
+<div class="section" id="home">
   <div class="search">
-    <input type="text" placeholder="পণ্য খুঁজুন...">
+    <input type="text" id="search" placeholder="পণ্য খুঁজুন..." onkeyup="searchProduct()">
   </div>
 
-  <div class="products">
+  <div class="counter">👁 Visitor: <span id="visitor"></span></div>
+  <div class="counter">💰 Total Sales: ৳ <span id="sales"></span></div>
 
-    <div class="card">
-      <img src="https://i.imgur.com/8ZQZQZQ.jpg">
-      <div class="info">
-        <div>স্পেশাল হারবাল ঔষধ</div>
-        <div class="price">৳ 500</div>
-        <a class="order-btn"
-        href="https://wa.me/8801304388032?text=আমি স্পেশাল হারবাল ঔষধ অর্ডার করতে চাই">
-        অর্ডার করুন</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="https://i.imgur.com/VQFZKZy.jpg">
-      <div class="info">
-        <div>এক্সক্লুসিভ ব্ল্যাক শার্ট</div>
-        <div class="price">৳ 1200</div>
-        <a class="order-btn"
-        href="https://wa.me/8801304388032?text=আমি ব্ল্যাক শার্ট অর্ডার করতে চাই">
-        অর্ডার করুন</a>
-      </div>
-    </div>
-
-  </div>
+  <div class="products" id="list"></div>
 </div>
 
-<!-- PROFILE -->
-<div id="profile" class="profile">
-  <div class="profile-box">
+<div class="section hide" id="profile">
+  <div class="profile">
     <h3>🏪 দোকানের তথ্য</h3>
-    <p><b>Shop Name:</b> Brother Fashion House</p>
+    <p><b>Shop Name:</b> Brothers Fashion House</p>
     <p><b>Owner:</b> মোঃ জসিম উদ্দিন মৃধা</p>
-    <p><b>Mobile:</b> +8801304388032</p>
+    <p><b>Mobile:</b> 01304388032</p>
     <p><b>Address:</b><br>
-      মামুন সুপার মার্কেট,<br>
-      রায়েন্দা বাজার, শরণখোলা,<br>
-      বাগেরহাট
-    </p>
-    <p>
-      📍 <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank">
-      Live Google Map Location</a>
-    </p>
-    <hr>
-    <p><b>Web Planning & Director:</b><br>
-       MRIDHA MD MERAJ
-    </p>
+    মামুন সুপার মার্কেট,<br>
+    রায়েন্দা বাজার, শরনখোলা,<br>
+    বাগেরহাট</p>
+
+    <p>📍 <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank">
+    Live Google Map Location</a></p>
+
+    <p><b>Web Planner:</b> MRIDHA MD MERAJ</p>
   </div>
 </div>
 
-<!-- Bottom Nav -->
-<div class="nav">
-  <div onclick="showHome()"><span>🏠</span>হোম</div>
-  <div onclick="showProfile()"><span>👤</span>প্রোফাইল</div>
-</div>
+<footer>
+  <div onclick="show('home')">🏠<br>হোম</div>
+  <div onclick="show('profile')">👤<br>প্রোফাইল</div>
+</footer>
+
+<script>
+let products=[
+ {name:"স্পেশাল হারবাল ঔষধ",price:500,size:"Free",img:"https://i.imgur.com/8zQZQZC.jpg",sold:false},
+ {name:"এক্সক্লুসিভ ব্ল্যাক শার্ট",price:1200,size:"M,L,XL",img:"https://i.imgur.com/2nCt3Sbl.jpg",sold:false}
+];
+
+let sales=localStorage.getItem("sales")||0;
+document.getElementById("sales").innerText=sales;
+
+let visitor=localStorage.getItem("visitor")||0;
+visitor++;
+localStorage.setItem("visitor",visitor);
+document.getElementById("visitor").innerText=visitor;
+
+function render(){
+ let html="";
+ products.forEach((p,i)=>{
+ html+=`
+ <div class="card">
+   ${p.sold?'<div class="sold">SOLD</div>':''}
+   <img src="${p.img}">
+   <h3>${p.name}</h3>
+   <p class="price">৳ ${p.price}</p>
+   <p class="size">Size: ${p.size}</p>
+   <a class="btn ${p.sold?'hide':''}"
+   href="https://wa.me/8801304388032?text=${encodeURIComponent(p.name)}">
+   অর্ডার করুন</a>
+
+   <a class="btn" onclick="sell(${i})">Sold</a>
+   <a class="btn" onclick="del(${i})">Delete</a>
+ </div>`;
+ });
+ document.getElementById("list").innerHTML=html;
+}
+render();
+
+function sell(i){
+ products[i].sold=true;
+ sales=parseInt(sales)+products[i].price;
+ localStorage.setItem("sales",sales);
+ document.getElementById("sales").innerText=sales;
+ render();
+}
+
+function del(i){
+ products.splice(i,1);
+ render();
+}
+
+function searchProduct(){
+ let q=document.getElementById("search").value.toLowerCase();
+ document.querySelectorAll(".card").forEach(c=>{
+ c.style.display=c.innerText.toLowerCase().includes(q)?"block":"none";
+ });
+}
+
+function show(id){
+ document.getElementById("home").classList.add("hide");
+ document.getElementById("profile").classList.add("hide");
+ document.getElementById(id).classList.remove("hide");
+}
+</script>
 
 </body>
 </html>
