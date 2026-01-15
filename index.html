@@ -9,36 +9,14 @@
         :root { --primary: #2563eb; --dark: #1f2937; --light: #f3f4f6; --danger: #ef4444; --success: #10b981; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--light); padding-bottom: 70px; }
-
-        /* হেডার - ব্রাদার ফ্যাশন হাউস (বড় করে) */
-        header { 
-            background: linear-gradient(135deg, var(--dark), var(--primary)); 
-            color: white; 
-            padding: 20px 15px; 
-            text-align: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-        }
-        .brand-name { 
-            font-size: 2rem; /* বড় ফন্ট */
-            font-weight: bold; 
-            cursor: pointer; 
-            user-select: none;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        /* বিজ্ঞাপন ব্যানার */
+        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 20px 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .brand-name { font-size: 2rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .marquee-container { background: #f59e0b; color: black; padding: 8px 0; overflow: hidden; white-space: nowrap; font-weight: bold; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: scroll 15s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        /* প্রোডাক্ট গ্রিড */
         .page { display: none; padding: 10px; animation: fadeIn 0.3s; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
         .product-img { width: 100%; height: 150px; object-fit: cover; background: #eee; }
@@ -48,77 +26,47 @@
         .new-price { color: var(--primary); font-weight: bold; }
         .old-price { color: #999; text-decoration: line-through; font-size: 0.8rem; }
         .discount-badge { position: absolute; top: 5px; left: 5px; background: var(--danger); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem; }
-        
         .order-btn { width: 100%; padding: 8px; background: var(--success); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        
-        /* সোল্ড আউট মার্ক */
         .sold-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); display: flex; justify-content: center; align-items: center; z-index: 5; }
         .sold-badge { background: var(--danger); color: white; padding: 5px 10px; transform: rotate(-15deg); font-weight: bold; border: 2px solid white; }
-
-        /* বটম নেভিগেশন */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; }
         .nav-item { text-align: center; color: var(--dark); text-decoration: none; font-size: 0.8rem; }
         .nav-item.active { color: var(--primary); }
         .nav-item i { font-size: 1.2rem; display: block; margin-bottom: 2px; }
-
-        /* প্রোফাইল ও এডমিন */
         .profile-card { background: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
-        .admin-panel { display: none; border-top: 3px solid var(--danger); padding-top: 20px; margin-top: 20px; }
-        .form-control { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        .btn { width: 100%; padding: 10px; border: none; border-radius: 5px; color: white; font-weight: bold; margin-bottom: 5px; cursor: pointer; }
-        .btn-primary { background: var(--primary); }
-        .btn-danger { background: var(--danger); }
-        .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-card { background: var(--light); padding: 10px; border-radius: 5px; text-align: center; }
-
-        /* অর্ডার মডাল */
+        .btn-primary { background: var(--primary); color:white; padding:10px; border-radius:5px; text-decoration:none; display:inline-block; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
+        .form-control { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="brand-name" id="secretTrigger">ব্রাদার ফ্যাশন হাউস</div>
+        <div class="brand-name">ব্রাদার ফ্যাশন হাউস</div>
         <div style="font-size: 1rem; opacity: 0.9; margin-top: 5px;">Brothers House</div>
     </header>
 
     <div class="marquee-container">
-        <div class="marquee-text" id="promoText">🔥 ব্রাদার ফ্যাশন হাউস-এ চলছে বিশাল ধামাকা অফার! এখনই অর্ডার করুন। 🔥</div>
+        <div class="marquee-text" id="promoText">লোডিং...</div>
     </div>
 
     <div id="homePage" class="page active">
-        <div class="product-grid" id="productContainer"></div>
+        <div class="product-grid" id="productContainer">
+            <p style="text-align:center; width:200%; padding:20px;">পণ্য লোড হচ্ছে...</p>
+        </div>
     </div>
 
     <div id="profilePage" class="page">
         <div class="profile-card">
             <h2 style="color: var(--primary); font-size: 1.5rem;">ব্রাদার্স হাউস</h2>
             <p style="color:#555; margin-top:5px;">প্রোঃ মোঃ জসিম উদ্দিন মৃধা</p>
-            <p style="margin:10px 0;"><i class="fas fa-phone" style="color:var(--primary)"></i> 01304388032</p>
+            <p style="margin:10px 0;"><i class="fas fa-phone"></i> 01304388032</p>
             <p style="margin-bottom:15px; color:#666;">মান্নান সুপার মার্কেট, রায়েন্দা বাজার, শরণখোলা, বাগেরহাট।</p>
-            
-            <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank" class="btn btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:auto; text-decoration:none; padding:12px 25px; border-radius:25px;">
+            <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank" class="btn-primary">
                 <i class="fas fa-map-marker-alt"></i> লাইভ লোকেশন দেখুন
             </a>
-
-            <div id="adminPanel" class="admin-panel">
-                <h3>Admin Control</h3>
-                <div class="stat-box">
-                    <div class="stat-card"><h3>Visitor</h3><span id="visitCount">0</span></div>
-                    <div class="stat-card"><h3>Sales</h3><span id="sellCount">0</span></div>
-                </div>
-
-                <input type="text" id="newPromo" class="form-control" placeholder="বিজ্ঞাপন পরিবর্তন করুন...">
-                <button onclick="updatePromo()" class="btn" style="background:orange; color:black;">বিজ্ঞাপন আপডেট</button>
-                <hr style="margin:15px 0;">
-
-                <h4>Add Product</h4>
-                <input type="text" id="pName" class="form-control" placeholder="পণ্যের নাম">
-                <input type="number" id="pPrice" class="form-control" placeholder="দাম (টাকা)">
-                <input type="number" id="pOldPrice" class="form-control" placeholder="পুরাতন দাম (ছাড়ের জন্য)">
-                <input type="text" id="pImg" class="form-control" placeholder="ছবির লিংক (URL)">
-                <button onclick="addProduct()" class="btn btn-primary">পণ্য যোগ করুন</button>
+            <div style="margin-top:20px; font-size:0.8rem; color:#aaa;">
+                <a href="admin.html" style="text-decoration:none; color:#aaa;">Admin Login</a>
             </div>
         </div>
     </div>
@@ -135,144 +83,88 @@
                 <option>Cash On Delivery</option>
                 <option>Bkash Payment</option>
             </select>
-            <button onclick="confirmOrder()" class="btn" style="background:#25D366;">Let's Order on WhatsApp <i class="fab fa-whatsapp"></i></button>
-            <button onclick="closeModal()" class="btn" style="background:#ddd; color:black;">বাতিল</button>
+            <button onclick="confirmOrder()" class="order-btn" style="background:#25D366;">WhatsApp Order <i class="fab fa-whatsapp"></i></button>
+            <button onclick="closeModal()" class="order-btn" style="background:#ddd; color:black; margin-top:5px;">বাতিল</button>
         </div>
     </div>
 
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="switchPage('homePage', this)">
-            <i class="fas fa-home"></i> হোম
-        </a>
-        <a href="#" class="nav-item" onclick="switchPage('profilePage', this)">
-            <i class="fas fa-user"></i> প্রোফাইল
-        </a>
+        <a href="#" class="nav-item active" onclick="switchPage('homePage', this)"><i class="fas fa-home"></i> হোম</a>
+        <a href="#" class="nav-item" onclick="switchPage('profilePage', this)"><i class="fas fa-user"></i> প্রোফাইল</a>
     </nav>
 
-    <script>
-        // ডাটা লোড
-        let products = JSON.parse(localStorage.getItem('products')) || [
-            { id: 1, name: "Premium T-Shirt", price: 350, oldPrice: 500, img: "https://via.placeholder.com/150", sold: false },
-            { id: 2, name: "Formal Pant", price: 650, oldPrice: 800, img: "https://via.placeholder.com/150", sold: false }
-        ];
-        let stats = JSON.parse(localStorage.getItem('stats')) || { visit: 0, sales: 0 };
-        let isAdmin = false;
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, update, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // ভিজিটর কাউন্টার
-        if (!sessionStorage.getItem('visited')) {
-            stats.visit++;
-            localStorage.setItem('stats', JSON.stringify(stats));
-            sessionStorage.setItem('visited', 'true');
-        }
-        document.getElementById('visitCount').innerText = stats.visit;
-        document.getElementById('sellCount').innerText = stats.sales;
+        // আপনার Firebase কনফিগারেশন বসানো হয়েছে
+        const firebaseConfig = {
+            apiKey: "AIzaSyD56PSyp7nVXKXphbSwgAJL6kUb33yb2iQ",
+            authDomain: "brother-fashion-house.firebaseapp.com",
+            databaseURL: "https://brother-fashion-house-default-rtdb.firebaseio.com",
+            projectId: "brother-fashion-house",
+            storageBucket: "brother-fashion-house.appspot.com",
+            messagingSenderId: "30910144708",
+            appId: "1:30910144708:web:7352698277af2c8aae6991",
+            measurementId: "G-TE8CRXPBL4"
+        };
 
-        // পেজ পরিবর্তন ফাংশন
-        function switchPage(pageId, btn) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            btn.classList.add('active');
-        }
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-        // রেন্ডার ফাংশন
-        function renderProducts() {
+        // Load Products Live
+        const productRef = ref(db, 'products');
+        onValue(productRef, (snapshot) => {
+            const data = snapshot.val();
             const container = document.getElementById('productContainer');
             container.innerHTML = '';
-            products.forEach(p => {
-                let discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
-                let soldBadge = p.sold ? `<div class="sold-overlay"><div class="sold-badge">SOLD OUT</div></div>` : '';
-                let btn = p.sold ? `<button class="order-btn" style="background:#ccc" disabled>স্টকে নেই</button>` : 
-                                   `<button onclick="openOrder(${p.id})" class="order-btn">অর্ডার করুন</button>`;
+            
+            if(data) {
+                const productList = Object.entries(data).map(([key, val]) => ({id: key, ...val})).reverse();
                 
-                let adminBtns = isAdmin ? `
-                    <div style="margin-top:5px; display:flex; gap:5px;">
-                        <button onclick="toggleSold(${p.id})" class="btn" style="font-size:0.7rem; padding:5px; background:${p.sold?'green':'orange'}">${p.sold?'Unsold':'Mark Sold'}</button>
-                        <button onclick="deleteProduct(${p.id})" class="btn btn-danger" style="font-size:0.7rem; padding:5px;">Delete</button>
-                    </div>` : '';
-
-                container.innerHTML += `
-                    <div class="product-card">
-                        ${soldBadge}
-                        <div class="discount-badge">-${discount}%</div>
-                        <img src="${p.img}" class="product-img" alt="${p.name}">
-                        <div class="product-info">
-                            <div class="product-title">${p.name}</div>
-                            <div class="price-box"><span class="new-price">৳${p.price}</span> <span class="old-price">৳${p.oldPrice}</span></div>
-                            ${btn}
-                            ${adminBtns}
-                        </div>
-                    </div>`;
-            });
-        }
-
-        // এডমিন প্যানেল ট্রিগার
-        let taps = 0;
-        document.getElementById('secretTrigger').addEventListener('click', () => {
-            taps++;
-            if (taps === 3) {
-                let pass = prompt("Enter Admin Password:");
-                if (pass === "Brother@2026") {
-                    isAdmin = true;
-                    document.getElementById('adminPanel').style.display = 'block';
-                    alert("Admin Mode ON");
-                    renderProducts();
-                } else {
-                    alert("Wrong Password!");
-                }
-                taps = 0;
+                productList.forEach(p => {
+                    let discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+                    let soldBadge = p.sold ? `<div class="sold-overlay"><div class="sold-badge">SOLD OUT</div></div>` : '';
+                    let btn = p.sold ? `<button class="order-btn" style="background:#ccc" disabled>স্টকে নেই</button>` : 
+                                       `<button onclick="window.openOrder('${p.id}', '${p.name}', '${p.price}')" class="order-btn">অর্ডার করুন</button>`;
+                    
+                    container.innerHTML += `
+                        <div class="product-card">
+                            ${soldBadge}
+                            <div class="discount-badge">-${discount}%</div>
+                            <img src="${p.img}" class="product-img" alt="${p.name}">
+                            <div class="product-info">
+                                <div class="product-title">${p.name}</div>
+                                <div class="price-box"><span class="new-price">৳${p.price}</span> <span class="old-price">৳${p.oldPrice}</span></div>
+                                ${btn}
+                            </div>
+                        </div>`;
+                });
+            } else {
+                container.innerHTML = '<p style="text-align:center; width:200%;">কোন পণ্য নেই</p>';
             }
-            setTimeout(() => taps = 0, 1000);
         });
 
-        // এডমিন ফাংশন
-        function addProduct() {
-            let name = document.getElementById('pName').value;
-            let price = document.getElementById('pPrice').value;
-            let old = document.getElementById('pOldPrice').value;
-            let img = document.getElementById('pImg').value || "https://via.placeholder.com/150";
-            if (name && price) {
-                products.unshift({ id: Date.now(), name, price, oldPrice: old, img, sold: false });
-                localStorage.setItem('products', JSON.stringify(products));
-                renderProducts();
-                document.getElementById('pName').value = '';
-                document.getElementById('pPrice').value = '';
-                alert("পণ্য যোগ হয়েছে!");
-            }
-        }
-        function deleteProduct(id) {
-            if(confirm("মুছে ফেলতে চান?")) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('products', JSON.stringify(products));
-                renderProducts();
-            }
-        }
-        function toggleSold(id) {
-            let p = products.find(x => x.id === id);
-            p.sold = !p.sold;
-            localStorage.setItem('products', JSON.stringify(products));
-            renderProducts();
-        }
-        function updatePromo() {
-            let txt = document.getElementById('newPromo').value;
-            if(txt) {
-                document.getElementById('promoText').innerText = txt;
-                localStorage.setItem('promoText', txt);
-                alert("বিজ্ঞাপন আপডেট হয়েছে!");
-            }
-        }
-        if(localStorage.getItem('promoText')) document.getElementById('promoText').innerText = localStorage.getItem('promoText');
+        // Load Promo Text
+        onValue(ref(db, 'promo'), (snapshot) => {
+            if(snapshot.val()) document.getElementById('promoText').innerText = snapshot.val();
+        });
 
-        // অর্ডার ফাংশন
-        let selected = null;
-        function openOrder(id) {
-            selected = products.find(p => p.id === id);
-            document.getElementById('modalPName').innerText = selected.name + " - ৳" + selected.price;
+        // Visitor Counter
+        if (!sessionStorage.getItem('visited')) {
+            update(ref(db, 'stats'), { visitors: increment(1) });
+            sessionStorage.setItem('visited', 'true');
+        }
+
+        // Global functions
+        window.selectedProduct = {};
+        window.openOrder = (id, name, price) => {
+            window.selectedProduct = {id, name, price};
+            document.getElementById('modalPName').innerText = name + " - ৳" + price;
             document.getElementById('orderModal').style.display = 'flex';
         }
-        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
         
-        function confirmOrder() {
+        window.confirmOrder = () => {
             let name = document.getElementById('cName').value;
             let mobile = document.getElementById('cMobile').value;
             let address = document.getElementById('cAddress').value;
@@ -281,20 +173,22 @@
             
             if (!name || !mobile || !address) { alert("সব তথ্য দিন!"); return; }
 
-            stats.sales++;
-            localStorage.setItem('stats', JSON.stringify(stats));
-            document.getElementById('sellCount').innerText = stats.sales;
+            update(ref(db, 'stats'), { sales: increment(1) });
 
-            let msg = `*নতুন অর্ডার!*%0A----------------%0A📦 *পণ্য:* ${selected.name}%0A💰 *দাম:* ৳${selected.price}%0A📏 *সাইজ:* ${size}%0A💳 *পেমেন্ট:* ${pay}%0A----------------%0A👤 *নাম:* ${name}%0A📞 *মোবাইল:* ${mobile}%0A🏠 *ঠিকানা:* ${address}`;
-            
-            // --- WhatsApp ফিক্স ---
-            // এখানে window.open এর বদলে window.location.href দেওয়া হয়েছে যাতে এরর পেজ না আসে
+            let msg = `*নতুন অর্ডার!*%0A----------------%0A📦 *পণ্য:* ${window.selectedProduct.name}%0A💰 *দাম:* ৳${window.selectedProduct.price}%0A📏 *সাইজ:* ${size}%0A💳 *পেমেন্ট:* ${pay}%0A----------------%0A👤 *নাম:* ${name}%0A📞 *মোবাইল:* ${mobile}%0A🏠 *ঠিকানা:* ${address}`;
             window.location.href = `https://wa.me/8801304388032?text=${msg}`;
-            
-            closeModal();
+            document.getElementById('orderModal').style.display = 'none';
         }
+    </script>
 
-        renderProducts();
+    <script>
+        function switchPage(pageId, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
     </script>
 </body>
 </html>
