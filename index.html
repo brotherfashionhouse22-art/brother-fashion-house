@@ -38,6 +38,10 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
         .form-control { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        
+        /* Secret Trigger Style */
+        #secretName { cursor: pointer; user-select: none; transition: color 0.2s; }
+        #secretName:active { color: var(--danger); }
     </style>
 </head>
 <body>
@@ -60,14 +64,16 @@
         <div class="profile-card">
             <h2 style="color: var(--primary); font-size: 1.5rem;">ব্রাদার্স হাউস</h2>
             <p style="color:#555; margin-top:5px;">প্রোঃ মোঃ জসিম উদ্দিন মৃধা</p>
+            
+            <p style="margin-top:5px; font-weight:bold; color:#1e40af;">
+                Director: <span id="secretName">MRIDHA MD MERAJ</span>
+            </p>
+
             <p style="margin:10px 0;"><i class="fas fa-phone"></i> 01304388032</p>
             <p style="margin-bottom:15px; color:#666;">মান্নান সুপার মার্কেট, রায়েন্দা বাজার, শরণখোলা, বাগেরহাট।</p>
             <a href="https://share.google/kFHYfb7eN2QsrpfQ4" target="_blank" class="btn-primary">
                 <i class="fas fa-map-marker-alt"></i> লাইভ লোকেশন দেখুন
             </a>
-            <div style="margin-top:20px; font-size:0.8rem; color:#aaa;">
-                <a href="admin.html" style="text-decoration:none; color:#aaa;">Admin Login</a>
-            </div>
         </div>
     </div>
 
@@ -97,7 +103,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, onValue, update, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // আপনার Firebase কনফিগারেশন বসানো হয়েছে
         const firebaseConfig = {
             apiKey: "AIzaSyD56PSyp7nVXKXphbSwgAJL6kUb33yb2iQ",
             authDomain: "brother-fashion-house.firebaseapp.com",
@@ -112,7 +117,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Load Products Live
+        // Load Products
         const productRef = ref(db, 'products');
         onValue(productRef, (snapshot) => {
             const data = snapshot.val();
@@ -121,7 +126,6 @@
             
             if(data) {
                 const productList = Object.entries(data).map(([key, val]) => ({id: key, ...val})).reverse();
-                
                 productList.forEach(p => {
                     let discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
                     let soldBadge = p.sold ? `<div class="sold-overlay"><div class="sold-badge">SOLD OUT</div></div>` : '';
@@ -141,22 +145,19 @@
                         </div>`;
                 });
             } else {
-                container.innerHTML = '<p style="text-align:center; width:200%;">কোন পণ্য নেই</p>';
+                container.innerHTML = '<p style="text-align:center; width:200%;">এখনো কোন পণ্য নেই</p>';
             }
         });
 
-        // Load Promo Text
         onValue(ref(db, 'promo'), (snapshot) => {
             if(snapshot.val()) document.getElementById('promoText').innerText = snapshot.val();
         });
 
-        // Visitor Counter
         if (!sessionStorage.getItem('visited')) {
             update(ref(db, 'stats'), { visitors: increment(1) });
             sessionStorage.setItem('visited', 'true');
         }
 
-        // Global functions
         window.selectedProduct = {};
         window.openOrder = (id, name, price) => {
             window.selectedProduct = {id, name, price};
@@ -172,7 +173,6 @@
             let pay = document.getElementById('cPayment').value;
             
             if (!name || !mobile || !address) { alert("সব তথ্য দিন!"); return; }
-
             update(ref(db, 'stats'), { sales: increment(1) });
 
             let msg = `*নতুন অর্ডার!*%0A----------------%0A📦 *পণ্য:* ${window.selectedProduct.name}%0A💰 *দাম:* ৳${window.selectedProduct.price}%0A📏 *সাইজ:* ${size}%0A💳 *পেমেন্ট:* ${pay}%0A----------------%0A👤 *নাম:* ${name}%0A📞 *মোবাইল:* ${mobile}%0A🏠 *ঠিকানা:* ${address}`;
@@ -182,6 +182,29 @@
     </script>
 
     <script>
+        let tapCount = 0;
+        let tapTimer;
+        
+        document.getElementById('secretName').addEventListener('click', () => {
+            clearTimeout(tapTimer);
+            tapCount++;
+            
+            if (tapCount === 3) {
+                let pass = prompt("Enter Admin Password:");
+                if (pass === "Brothers@2026") {
+                    window.location.href = "admin.html";
+                } else {
+                    alert("ভুল পাসওয়ার্ড!");
+                }
+                tapCount = 0;
+            }
+            
+            // Reset taps if not completed within 1 second
+            tapTimer = setTimeout(() => {
+                tapCount = 0;
+            }, 1000);
+        });
+
         function switchPage(pageId, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
