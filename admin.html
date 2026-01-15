@@ -59,7 +59,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, remove, update, onValue, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // আপনার কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyD56PSyp7nVXKXphbSwgAJL6kUb33yb2iQ",
             authDomain: "brother-fashion-house.firebaseapp.com",
@@ -74,7 +73,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Global functions
         window.addProduct = () => {
             const name = document.getElementById('pName').value;
             const price = document.getElementById('pPrice').value;
@@ -85,8 +83,11 @@
                 push(ref(db, 'products'), {
                     name, price, oldPrice: old, img, sold: false, timestamp: Date.now()
                 });
-                alert("Added!");
+                alert("Product Added!");
                 document.getElementById('pName').value = '';
+                document.getElementById('pPrice').value = '';
+                document.getElementById('pOld').value = '';
+                document.getElementById('pImg').value = '';
             }
         };
 
@@ -108,7 +109,6 @@
             if(amount) update(ref(db, 'stats'), { revenue: increment(parseInt(amount)), sales: increment(1) });
         };
 
-        // Load Data
         onValue(ref(db, 'products'), (snap) => {
             const list = document.getElementById('pList');
             list.innerHTML = '';
