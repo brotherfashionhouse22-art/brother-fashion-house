@@ -12,7 +12,7 @@
         
         /* Header & Marquee */
         header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 20px 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .brand-name { font-size: 2rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .brand-name { font-size: 1.8rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .marquee-container { background: #f59e0b; color: black; padding: 8px 0; overflow: hidden; white-space: nowrap; font-weight: bold; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: scroll 20s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -24,22 +24,72 @@
         
         /* Company Intro */
         .company-intro { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
-        .company-intro h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 10px; }
-        .company-intro p { color: #555; font-size: 0.9rem; line-height: 1.4; }
+        .company-intro h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 5px; }
+        .company-intro p { color: #555; font-size: 0.85rem; line-height: 1.4; }
 
         /* Product Grid */
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
-        .product-img { width: 100%; height: 150px; object-fit: cover; background: #eee; }
-        .product-info { padding: 10px; }
-        .product-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; height: 35px; overflow: hidden; }
-        .price-box { display: flex; gap: 5px; align-items: center; font-size: 0.9rem; margin-bottom: 8px; }
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+        }
+        .product-card { 
+            background: white; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: relative; 
+            width: 100%; 
+        }
+        
+        /* Slider Styles - Swipe Logic */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 150px; /* ছবির হাইট */
+        }
+        .slider-container { 
+            width: 100%; 
+            height: 100%;
+            display: flex; 
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch; 
+            scrollbar-width: none; 
+        }
+        .slider-container::-webkit-scrollbar { display: none; }
+        
+        .slider-img { 
+            min-width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            scroll-snap-align: center; 
+            background: #eee; 
+        }
+
+        /* Swipe Hint Icon */
+        .swipe-hint {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .product-info { padding: 8px; }
+        .product-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; height: 32px; overflow: hidden; line-height: 1.2; }
+        .price-box { display: flex; gap: 5px; align-items: center; font-size: 0.85rem; margin-bottom: 5px; flex-wrap: wrap;}
         .new-price { color: var(--primary); font-weight: bold; }
-        .old-price { color: #999; text-decoration: line-through; font-size: 0.8rem; }
-        .discount-badge { position: absolute; top: 5px; left: 5px; background: var(--danger); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem; }
-        .order-btn { width: 100%; padding: 8px; background: var(--success); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .sold-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); display: flex; justify-content: center; align-items: center; z-index: 5; }
-        .sold-badge { background: var(--danger); color: white; padding: 5px 10px; transform: rotate(-15deg); font-weight: bold; border: 2px solid white; }
+        .old-price { color: #999; text-decoration: line-through; font-size: 0.75rem; }
+        .discount-badge { position: absolute; top: 5px; left: 5px; background: var(--danger); color: white; padding: 2px 5px; border-radius: 5px; font-size: 0.65rem; z-index: 5; }
+        .order-btn { width: 100%; padding: 6px; background: var(--success); color: white; border: none; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
+        .sold-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); display: flex; justify-content: center; align-items: center; z-index: 10; }
+        .sold-badge { background: var(--danger); color: white; padding: 5px 10px; transform: rotate(-15deg); font-weight: bold; border: 2px solid white; font-size: 0.8rem; }
         
         /* Profile & Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; }
@@ -47,10 +97,12 @@
         .nav-item.active { color: var(--primary); }
         .nav-item i { font-size: 1.2rem; display: block; margin-bottom: 2px; }
         
-        .profile-card { background: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .btn-primary { background: var(--primary); color:white; padding:10px; border-radius:5px; text-decoration:none; display:inline-block; }
-        /* লোগোর জন্য CSS */
-        .profile-logo { width: 100%; margin-top: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #eee; }
+        .profile-card { background: white; padding: 15px; text-align: center; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-primary { background: var(--primary); color:white; padding:10px; border-radius:5px; text-decoration:none; display:inline-block; font-size: 0.9rem;}
+        .profile-logo { width: 100%; margin-top: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #eee; }
+
+        /* Map Styles */
+        .map-frame { width: 100%; height: 250px; border: 0; border-radius: 10px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
@@ -65,7 +117,7 @@
 <body>
     <header>
         <div class="brand-name">ব্রাদার ফ্যাশন হাউস</div>
-        <div style="font-size: 1rem; opacity: 0.9; margin-top: 5px;">Brothers House</div>
+        <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 2px;">Brothers House</div>
     </header>
 
     <div class="marquee-container">
@@ -75,7 +127,7 @@
     <div id="homePage" class="page active">
         <div class="company-intro">
             <h2>আমাদের প্রতিশ্রুতি</h2>
-            <p>ব্রাদার ফ্যাশন হাউস সর্বদা আপনাদের জন্য নিয়ে আসে রুচিশীল ও আরামদায়ক পোশাক। গুণগত মান এবং গ্রাহক সন্তুষ্টি আমাদের প্রধান লক্ষ্য। আমাদের সাথে থাকার জন্য ধন্যবাদ।</p>
+            <p>ব্রাদার ফ্যাশন হাউস সর্বদা আপনাদের জন্য নিয়ে আসে রুচিশীল ও আরামদায়ক পোশাক। গুণগত মান এবং গ্রাহক সন্তুষ্টি আমাদের প্রধান লক্ষ্য।</p>
         </div>
 
         <div class="product-grid" id="productContainer">
@@ -85,23 +137,25 @@
 
     <div id="profilePage" class="page">
         <div class="profile-card">
-            <h2 style="color: var(--primary); font-size: 1.6rem; margin-bottom: 5px;">ব্রাদার্স হাউস</h2>
-            <p style="color:#555; font-size: 1.1rem; margin-bottom: 10px;">প্রোঃ মোঃ জসিম উদ্দিন মৃধা</p>
+            <h2 style="color: var(--primary); font-size: 1.4rem; margin-bottom: 5px;">ব্রাদার্স হাউস</h2>
+            <p style="color:#555; font-size: 1rem; margin-bottom: 10px;">প্রোঃ মোঃ জসিম উদ্দিন মৃধা</p>
             
             <div style="background: #eef2ff; padding: 10px; border-radius: 8px; margin: 15px 0;">
-                <p style="font-size: 0.9rem; color:#1e40af;">
+                <p style="font-size: 0.85rem; color:#1e40af;">
                     ওয়েবসাইট প্যালেনার: <br>
-                    <span id="secretName" style="font-size: 1.1rem;">MRIDHA MD MERAJ</span>
+                    <span id="secretName" style="font-size: 1rem;">MRIDHA MD MERAJ</span>
                 </p>
             </div>
 
-            <p style="margin:10px 0; font-size: 1.1rem;"><i class="fas fa-phone-alt" style="color:var(--success);"></i> 01304388032</p>
-            <p style="margin-bottom:15px; color:#666;">মান্নান সুপার মার্কেট, রায়েন্দা বাজার, শরণখোলা, বাগেরহাট।</p>
+            <p style="margin:10px 0; font-size: 1rem;"><i class="fas fa-phone-alt" style="color:var(--success);"></i> 01304388032</p>
+            <p style="margin-bottom:5px; color:#666; font-size: 0.9rem;">মান্নান সুপার মার্কেট, রায়েন্দা বাজার, শরণখোলা, বাগেরহাট।</p>
             
-            <a href="https://www.google.com/maps?q=22.3706400,89.8577389" target="_blank" class="btn-primary">
-                <i class="fas fa-map-marker-alt"></i> লাইভ লোকেশন দেখুন
-            </a>
-
+            <iframe 
+                class="map-frame"
+                src="https://maps.google.com/maps?q=Brother+fashion+house,Mannan+Super+Market,Sharankhola&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                allowfullscreen>
+            </iframe>
+            
             <img src="https://i.ibb.co/4RT8vSCc/1768049168007.png" class="profile-logo" alt="Brother Fashion House Logo">
         </div>
     </div>
@@ -146,7 +200,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // পণ্য লোড করা
         const productRef = ref(db, 'products');
         onValue(productRef, (snapshot) => {
             const data = snapshot.val();
@@ -161,11 +214,27 @@
                     let btn = p.sold ? `<button class="order-btn" style="background:#ccc" disabled>স্টকে নেই</button>` : 
                                        `<button onclick="window.openOrder('${p.id}', '${p.name}', '${p.price}')" class="order-btn">অর্ডার করুন</button>`;
                     
+                    // --- SLIDER LOGIC ---
+                    // এখানে চেক করছি একাধিক ছবি আছে কিনা। না থাকলে একই ছবি ৩ বার দেখাবে (যাতে স্লাইডার বোঝা যায়)
+                    let images = [];
+                    if (p.images) {
+                        images = Array.isArray(p.images) ? p.images : Object.values(p.images);
+                    } else {
+                        // ডেমো হিসেবে একই ছবি ৩ বার দিচ্ছি যাতে স্লাইডার কাজ করে
+                        images = [p.img, p.img, p.img]; 
+                    }
+
+                    let imageHtml = `<div class="slider-wrapper"><div class="slider-container">`;
+                    images.forEach(url => {
+                        imageHtml += `<img src="${url}" class="slider-img" alt="${p.name}" loading="lazy">`;
+                    });
+                    imageHtml += `</div><div class="swipe-hint"><i class="fas fa-arrows-alt-h"></i></div></div>`;
+
                     container.innerHTML += `
                         <div class="product-card">
                             ${soldBadge}
                             <div class="discount-badge">-${discount}%</div>
-                            <img src="${p.img}" class="product-img" alt="${p.name}">
+                            ${imageHtml}
                             <div class="product-info">
                                 <div class="product-title">${p.name}</div>
                                 <div class="price-box"><span class="new-price">৳${p.price}</span> <span class="old-price">৳${p.oldPrice}</span></div>
@@ -178,7 +247,6 @@
             }
         });
 
-        // ভিজিটর কাউন্ট
         if (!sessionStorage.getItem('visited')) {
             update(ref(db, 'stats'), { visitors: increment(1) });
             sessionStorage.setItem('visited', 'true');
@@ -208,7 +276,6 @@
     </script>
 
     <script>
-        // সিক্রেট অ্যাডমিন ট্রিগার
         let tapCount = 0;
         let tapTimer;
         
@@ -225,8 +292,6 @@
                 }
                 tapCount = 0;
             }
-            
-            // ১ সেকেন্ডের মধ্যে ৩ বার না চাপলে রিসেট হবে
             tapTimer = setTimeout(() => {
                 tapCount = 0;
             }, 1000);
