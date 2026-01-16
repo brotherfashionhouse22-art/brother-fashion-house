@@ -10,9 +10,87 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--light); padding-bottom: 70px; }
         
-        /* Header & Marquee */
-        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 20px 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .brand-name { font-size: 1.8rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        /* --- আপডেটেড স্লাইডশো এবং টেক্সট ডিজাইন --- */
+        .header-slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 280px; /* হাইট একটু বাড়ানো হলো */
+            overflow: hidden;
+            background: #000;
+        }
+
+        .header-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .header-slide.active {
+            opacity: 1;
+        }
+
+        .header-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* ছবি এখন অনেক ক্লিয়ার দেখা যাবে, কালো শেড একদম কমিয়ে দেওয়া হয়েছে */
+            filter: brightness(0.8); 
+        }
+
+        .header-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        /* --- ম্যাজিক টেক্সট ডিজাইন (ফাঁপা লেখা) --- */
+        .brand-name { 
+            font-size: 2.8rem; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            
+            /* এই লাইনের কারণে লেখার ভেতর দিয়ে ছবি দেখা যাবে */
+            color: rgba(255, 255, 255, 0.05); 
+            
+            /* লেখার বর্ডার এনিমেশন */
+            -webkit-text-stroke: 2px #fff; 
+            animation: strokeColorChange 5s infinite alternate;
+            letter-spacing: 2px;
+        }
+
+        .brand-subtitle {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 5px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px black;
+            animation: fadeInUpDown 3s infinite ease-in-out;
+        }
+
+        /* রঙের এনিমেশন (ভিডিওর মত কালার চলবে) */
+        @keyframes strokeColorChange {
+            0% { -webkit-text-stroke-color: #ff0000; }   /* লাল */
+            25% { -webkit-text-stroke-color: #00ff00; }  /* সবুজ */
+            50% { -webkit-text-stroke-color: #ffff00; }  /* হলুদ */
+            75% { -webkit-text-stroke-color: #00ccff; }  /* নীল */
+            100% { -webkit-text-stroke-color: #ff00ff; } /* গোলাপি */
+        }
+
+        @keyframes fadeInUpDown {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-5px); opacity: 1; }
+        }
+        /* ----------------------------------------- */
+        
         .marquee-container { background: #f59e0b; color: black; padding: 8px 0; overflow: hidden; white-space: nowrap; font-weight: bold; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: scroll 20s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -22,64 +100,20 @@
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        /* Company Intro */
+        /* Product Grid & Others */
         .company-intro { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
         .company-intro h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 5px; }
         .company-intro p { color: #555; font-size: 0.85rem; line-height: 1.4; }
 
-        /* Product Grid */
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 10px; 
-        }
-        .product-card { 
-            background: white; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-            position: relative; 
-            width: 100%; 
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .product-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; width: 100%; }
         
-        /* Slider Styles - Swipe Logic */
-        .slider-wrapper {
-            position: relative;
-            width: 100%;
-            height: 150px; /* ছবির হাইট */
-        }
-        .slider-container { 
-            width: 100%; 
-            height: 100%;
-            display: flex; 
-            overflow-x: auto; 
-            scroll-snap-type: x mandatory; 
-            -webkit-overflow-scrolling: touch; 
-            scrollbar-width: none; 
-        }
+        /* Slider inside Product Card */
+        .slider-wrapper { position: relative; width: 100%; height: 150px; }
+        .slider-container { width: 100%; height: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .slider-container::-webkit-scrollbar { display: none; }
-        
-        .slider-img { 
-            min-width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            scroll-snap-align: center; 
-            background: #eee; 
-        }
-
-        /* Swipe Hint Icon */
-        .swipe-hint {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            pointer-events: none;
-            z-index: 2;
-        }
+        .slider-img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: center; background: #eee; cursor: zoom-in; }
+        .swipe-hint { position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.5); color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; pointer-events: none; }
 
         .product-info { padding: 8px; }
         .product-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; height: 32px; overflow: hidden; line-height: 1.2; }
@@ -91,34 +125,48 @@
         .sold-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); display: flex; justify-content: center; align-items: center; z-index: 10; }
         .sold-badge { background: var(--danger); color: white; padding: 5px 10px; transform: rotate(-15deg); font-weight: bold; border: 2px solid white; font-size: 0.8rem; }
         
-        /* Profile & Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; }
         .nav-item { text-align: center; color: var(--dark); text-decoration: none; font-size: 0.8rem; }
         .nav-item.active { color: var(--primary); }
         .nav-item i { font-size: 1.2rem; display: block; margin-bottom: 2px; }
         
         .profile-card { background: white; padding: 15px; text-align: center; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .btn-primary { background: var(--primary); color:white; padding:10px; border-radius:5px; text-decoration:none; display:inline-block; font-size: 0.9rem;}
         .profile-logo { width: 100%; margin-top: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #eee; }
-
-        /* Map Styles */
         .map-frame { width: 100%; height: 250px; border: 0; border-radius: 10px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* Modal */
+        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
         .form-control { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
         
-        /* Secret Trigger Style */
+        .zoom-modal { display: none; position: fixed; z-index: 9999; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); }
+        .zoom-modal-content { margin: auto; display: block; width: 80%; max-width: 700px; max-height: 80vh; object-fit: contain; animation-name: zoom; animation-duration: 0.3s; }
+        @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
+        .zoom-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        
         #secretName { cursor: pointer; user-select: none; transition: color 0.2s; font-weight: bold; text-decoration: underline; text-decoration-style: dotted; }
-        #secretName:active { color: var(--danger); }
     </style>
 </head>
 <body>
-    <header>
-        <div class="brand-name">ব্রাদার ফ্যাশন হাউস</div>
-        <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 2px;">Brothers House</div>
-    </header>
+    <div class="header-slideshow-container">
+        <div class="header-slide active">
+            <img src="1000047891.jpg" onerror="this.src='https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1000&auto=format&fit=crop'" alt="Fashion Banner 1">
+        </div>
+        <div class="header-slide">
+            <img src="1000047889.jpg" onerror="this.src='https://images.unsplash.com/photo-1490481651871-32d24720a577?q=80&w=1000&auto=format&fit=crop'" alt="Fashion Banner 2">
+        </div>
+        <div class="header-slide">
+            <img src="1000047890.png" onerror="this.src='https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1000&auto=format&fit=crop'" alt="Fashion Banner 3">
+        </div>
+        <div class="header-slide">
+            <img src="1000047893.png" onerror="this.src='https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1000&auto=format&fit=crop'" alt="Fashion Banner 4">
+        </div>
+
+        <div class="header-overlay-text">
+            <div class="brand-name">ব্রাদার ফ্যাশন হাউস</div>
+            <div class="brand-subtitle">Brothers Fashion House</div>
+        </div>
+    </div>
 
     <div class="marquee-container">
         <div class="marquee-text" id="promoText">ব্রাদার ফ্যাশন হাউস - আধুনিকতার ছোঁয়া, ঐতিহ্যের বন্ধন। সেরা মানের পোশাক, সাশ্রয়ী মূল্যে।</div>
@@ -150,13 +198,8 @@
             <p style="margin:10px 0; font-size: 1rem;"><i class="fas fa-phone-alt" style="color:var(--success);"></i> 01304388032</p>
             <p style="margin-bottom:5px; color:#666; font-size: 0.9rem;">মান্নান সুপার মার্কেট, রায়েন্দা বাজার, শরণখোলা, বাগেরহাট।</p>
             
-            <iframe 
-                class="map-frame"
-                src="https://maps.google.com/maps?q=Brother+fashion+house,Mannan+Super+Market,Sharankhola&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                allowfullscreen>
-            </iframe>
-            
-            <img src="https://i.ibb.co/4RT8vSCc/1768049168007.png" class="profile-logo" alt="Brother Fashion House Logo">
+            <iframe class="map-frame" src="https://maps.google.com/maps?q=Brother+fashion+house,Mannan+Super+Market,Sharankhola&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+            <img src="https://i.ibb.co/4RT8vSCc/1768049168007.png" class="profile-logo" alt="Logo">
         </div>
     </div>
 
@@ -175,6 +218,11 @@
             <button onclick="confirmOrder()" class="order-btn" style="background:#25D366;">WhatsApp Order <i class="fab fa-whatsapp"></i></button>
             <button onclick="closeModal()" class="order-btn" style="background:#ddd; color:black; margin-top:5px;">বাতিল</button>
         </div>
+    </div>
+
+    <div id="imageZoomModal" class="zoom-modal" onclick="closeZoomModal()">
+        <span class="zoom-close">×</span>
+        <img class="zoom-modal-content" id="zoomedImg">
     </div>
 
     <nav class="bottom-nav">
@@ -213,20 +261,12 @@
                     let soldBadge = p.sold ? `<div class="sold-overlay"><div class="sold-badge">SOLD OUT</div></div>` : '';
                     let btn = p.sold ? `<button class="order-btn" style="background:#ccc" disabled>স্টকে নেই</button>` : 
                                        `<button onclick="window.openOrder('${p.id}', '${p.name}', '${p.price}')" class="order-btn">অর্ডার করুন</button>`;
-                    
-                    // --- SLIDER LOGIC ---
-                    // এখানে চেক করছি একাধিক ছবি আছে কিনা। না থাকলে একই ছবি ৩ বার দেখাবে (যাতে স্লাইডার বোঝা যায়)
                     let images = [];
-                    if (p.images) {
-                        images = Array.isArray(p.images) ? p.images : Object.values(p.images);
-                    } else {
-                        // ডেমো হিসেবে একই ছবি ৩ বার দিচ্ছি যাতে স্লাইডার কাজ করে
-                        images = [p.img, p.img, p.img]; 
-                    }
+                    if (p.images) { images = Array.isArray(p.images) ? p.images : Object.values(p.images); } else { images = [p.img]; }
 
                     let imageHtml = `<div class="slider-wrapper"><div class="slider-container">`;
                     images.forEach(url => {
-                        imageHtml += `<img src="${url}" class="slider-img" alt="${p.name}" loading="lazy">`;
+                        imageHtml += `<img src="${url}" class="slider-img" alt="${p.name}" loading="lazy" onclick="window.openZoom('${url}')">`;
                     });
                     imageHtml += `</div><div class="swipe-hint"><i class="fas fa-arrows-alt-h"></i></div></div>`;
 
@@ -242,33 +282,16 @@
                             </div>
                         </div>`;
                 });
-            } else {
-                container.innerHTML = '<p style="text-align:center; width:200%;">এখনো কোন পণ্য নেই</p>';
-            }
+            } else { container.innerHTML = '<p style="text-align:center; width:200%;">এখনো কোন পণ্য নেই</p>'; }
         });
 
-        if (!sessionStorage.getItem('visited')) {
-            update(ref(db, 'stats'), { visitors: increment(1) });
-            sessionStorage.setItem('visited', 'true');
-        }
-
+        if (!sessionStorage.getItem('visited')) { update(ref(db, 'stats'), { visitors: increment(1) }); sessionStorage.setItem('visited', 'true'); }
         window.selectedProduct = {};
-        window.openOrder = (id, name, price) => {
-            window.selectedProduct = {id, name, price};
-            document.getElementById('modalPName').innerText = name + " - ৳" + price;
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-        
+        window.openOrder = (id, name, price) => { window.selectedProduct = {id, name, price}; document.getElementById('modalPName').innerText = name + " - ৳" + price; document.getElementById('orderModal').style.display = 'flex'; }
         window.confirmOrder = () => {
-            let name = document.getElementById('cName').value;
-            let mobile = document.getElementById('cMobile').value;
-            let address = document.getElementById('cAddress').value;
-            let size = document.getElementById('cSize').value;
-            let pay = document.getElementById('cPayment').value;
-            
+            let name = document.getElementById('cName').value, mobile = document.getElementById('cMobile').value, address = document.getElementById('cAddress').value, size = document.getElementById('cSize').value, pay = document.getElementById('cPayment').value;
             if (!name || !mobile || !address) { alert("সব তথ্য দিন!"); return; }
             update(ref(db, 'stats'), { sales: increment(1) });
-
             let msg = `*নতুন অর্ডার!*%0A----------------%0A📦 *পণ্য:* ${window.selectedProduct.name}%0A💰 *দাম:* ৳${window.selectedProduct.price}%0A📏 *সাইজ:* ${size}%0A💳 *পেমেন্ট:* ${pay}%0A----------------%0A👤 *নাম:* ${name}%0A📞 *মোবাইল:* ${mobile}%0A🏠 *ঠিকানা:* ${address}`;
             window.location.href = `https://wa.me/8801304388032?text=${msg}`;
             document.getElementById('orderModal').style.display = 'none';
@@ -276,25 +299,32 @@
     </script>
 
     <script>
-        let tapCount = 0;
-        let tapTimer;
+        // Slideshow Logic
+        let headerSlideIndex = 0;
+        const headerSlides = document.querySelectorAll('.header-slide');
+        function showHeaderSlides() {
+            for (let i = 0; i < headerSlides.length; i++) { headerSlides[i].classList.remove('active'); }
+            headerSlideIndex++;
+            if (headerSlideIndex > headerSlides.length) {headerSlideIndex = 1}
+            headerSlides[headerSlideIndex-1].classList.add('active');
+            setTimeout(showHeaderSlides, 4000); 
+        }
+        if (headerSlides.length > 0) showHeaderSlides();
+
+        // Zoom Logic
+        window.openZoom = function(src) { document.getElementById("imageZoomModal").style.display = "block"; document.getElementById("zoomedImg").src = src; }
+        window.closeZoomModal = function() { document.getElementById("imageZoomModal").style.display = "none"; }
         
+        // Admin Trigger
+        let tapCount = 0, tapTimer;
         document.getElementById('secretName').addEventListener('click', () => {
-            clearTimeout(tapTimer);
-            tapCount++;
-            
+            clearTimeout(tapTimer); tapCount++;
             if (tapCount === 3) {
                 let pass = prompt("Enter Admin Password:");
-                if (pass === "Brothers@2026") {
-                    window.location.href = "admin.html";
-                } else {
-                    alert("ভুল পাসওয়ার্ড!");
-                }
+                if (pass === "Brothers@2026") window.location.href = "admin.html"; else alert("ভুল পাসওয়ার্ড!");
                 tapCount = 0;
             }
-            tapTimer = setTimeout(() => {
-                tapCount = 0;
-            }, 1000);
+            tapTimer = setTimeout(() => tapCount = 0, 1000);
         });
 
         function switchPage(pageId, btn) {
