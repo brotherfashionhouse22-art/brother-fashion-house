@@ -10,86 +10,18 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--light); padding-bottom: 70px; }
         
-        /* --- আপডেটেড স্লাইডশো এবং টেক্সট ডিজাইন --- */
-        .header-slideshow-container {
-            position: relative;
-            width: 100%;
-            height: 280px; /* হাইট একটু বাড়ানো হলো */
-            overflow: hidden;
-            background: #000;
-        }
+        /* --- আপডেটেড স্লাইডশো --- */
+        .header-slideshow-container { position: relative; width: 100%; height: 280px; overflow: hidden; background: #000; }
+        .header-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
+        .header-slide.active { opacity: 1; }
+        .header-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+        .header-overlay-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10; width: 100%; padding: 0 10px; }
 
-        .header-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .header-slide.active {
-            opacity: 1;
-        }
-
-        .header-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* ছবি এখন অনেক ক্লিয়ার দেখা যাবে, কালো শেড একদম কমিয়ে দেওয়া হয়েছে */
-            filter: brightness(0.8); 
-        }
-
-        .header-overlay-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-            width: 100%;
-            padding: 0 10px;
-        }
-
-        /* --- ম্যাজিক টেক্সট ডিজাইন (ফাঁপা লেখা) --- */
-        .brand-name { 
-            font-size: 2.8rem; 
-            font-weight: 900; 
-            text-transform: uppercase;
-            
-            /* এই লাইনের কারণে লেখার ভেতর দিয়ে ছবি দেখা যাবে */
-            color: rgba(255, 255, 255, 0.05); 
-            
-            /* লেখার বর্ডার এনিমেশন */
-            -webkit-text-stroke: 2px #fff; 
-            animation: strokeColorChange 5s infinite alternate;
-            letter-spacing: 2px;
-        }
-
-        .brand-subtitle {
-            font-size: 1.2rem;
-            color: white;
-            margin-top: 5px;
-            font-weight: bold;
-            text-shadow: 1px 1px 3px black;
-            animation: fadeInUpDown 3s infinite ease-in-out;
-        }
-
-        /* রঙের এনিমেশন (ভিডিওর মত কালার চলবে) */
-        @keyframes strokeColorChange {
-            0% { -webkit-text-stroke-color: #ff0000; }   /* লাল */
-            25% { -webkit-text-stroke-color: #00ff00; }  /* সবুজ */
-            50% { -webkit-text-stroke-color: #ffff00; }  /* হলুদ */
-            75% { -webkit-text-stroke-color: #00ccff; }  /* নীল */
-            100% { -webkit-text-stroke-color: #ff00ff; } /* গোলাপি */
-        }
-
-        @keyframes fadeInUpDown {
-            0%, 100% { transform: translateY(0); opacity: 0.8; }
-            50% { transform: translateY(-5px); opacity: 1; }
-        }
-        /* ----------------------------------------- */
+        /* --- টেক্সট ডিজাইন --- */
+        .brand-name { font-size: 2.8rem; font-weight: 900; text-transform: uppercase; color: rgba(255, 255, 255, 0.05); -webkit-text-stroke: 2px #fff; animation: strokeColorChange 5s infinite alternate; letter-spacing: 2px; }
+        .brand-subtitle { font-size: 1.2rem; color: white; margin-top: 5px; font-weight: bold; text-shadow: 1px 1px 3px black; animation: fadeInUpDown 3s infinite ease-in-out; }
+        @keyframes strokeColorChange { 0% { -webkit-text-stroke-color: #ff0000; } 25% { -webkit-text-stroke-color: #00ff00; } 50% { -webkit-text-stroke-color: #ffff00; } 75% { -webkit-text-stroke-color: #00ccff; } 100% { -webkit-text-stroke-color: #ff00ff; } }
+        @keyframes fadeInUpDown { 0%, 100% { transform: translateY(0); opacity: 0.8; } 50% { transform: translateY(-5px); opacity: 1; } }
         
         .marquee-container { background: #f59e0b; color: black; padding: 8px 0; overflow: hidden; white-space: nowrap; font-weight: bold; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: scroll 20s linear infinite; }
@@ -100,7 +32,7 @@
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        /* Product Grid & Others */
+        /* Product Grid */
         .company-intro { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
         .company-intro h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 5px; }
         .company-intro p { color: #555; font-size: 0.85rem; line-height: 1.4; }
@@ -145,6 +77,18 @@
         .zoom-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
         
         #secretName { cursor: pointer; user-select: none; transition: color 0.2s; font-weight: bold; text-decoration: underline; text-decoration-style: dotted; }
+
+        /* নতুন লোডিং স্পিনার */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -179,7 +123,10 @@
         </div>
 
         <div class="product-grid" id="productContainer">
-            <p style="text-align:center; width:200%; padding:20px;">পণ্য লোড হচ্ছে...</p>
+            <div style="grid-column: span 2; text-align: center; padding: 20px;">
+                <div class="loader"></div>
+                <p>পণ্য লোড হচ্ছে...</p>
+            </div>
         </div>
     </div>
 
@@ -231,8 +178,9 @@
     </nav>
 
     <script type="module">
+        // Firebase মডিউল লোড করা হচ্ছে (query এবং limitToLast যোগ করা হয়েছে স্পিডের জন্য)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, update, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, update, increment, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD56PSyp7nVXKXphbSwgAJL6kUb33yb2iQ",
@@ -248,13 +196,20 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        // এখানে স্পিড অপটিমাইজেশন করা হয়েছে
         const productRef = ref(db, 'products');
-        onValue(productRef, (snapshot) => {
+        
+        // সব পণ্যের বদলে শুধুমাত্র শেষের ৫০টি পণ্য লোড হবে
+        const recentProductsQuery = query(productRef, limitToLast(50));
+
+        onValue(recentProductsQuery, (snapshot) => {
             const data = snapshot.val();
             const container = document.getElementById('productContainer');
-            container.innerHTML = '';
             
             if(data) {
+                // ডাটা ক্লিয়ার করে নতুন করে বসানো
+                container.innerHTML = '';
+                
                 const productList = Object.entries(data).map(([key, val]) => ({id: key, ...val})).reverse();
                 productList.forEach(p => {
                     let discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
@@ -266,6 +221,7 @@
 
                     let imageHtml = `<div class="slider-wrapper"><div class="slider-container">`;
                     images.forEach(url => {
+                        // loading="lazy" ইমেজ ফাস্ট লোড করতে সাহায্য করবে
                         imageHtml += `<img src="${url}" class="slider-img" alt="${p.name}" loading="lazy" onclick="window.openZoom('${url}')">`;
                     });
                     imageHtml += `</div><div class="swipe-hint"><i class="fas fa-arrows-alt-h"></i></div></div>`;
@@ -282,7 +238,9 @@
                             </div>
                         </div>`;
                 });
-            } else { container.innerHTML = '<p style="text-align:center; width:200%;">এখনো কোন পণ্য নেই</p>'; }
+            } else { 
+                container.innerHTML = '<p style="text-align:center; width:200%;">এখনো কোন পণ্য নেই</p>'; 
+            }
         });
 
         if (!sessionStorage.getItem('visited')) { update(ref(db, 'stats'), { visitors: increment(1) }); sessionStorage.setItem('visited', 'true'); }
